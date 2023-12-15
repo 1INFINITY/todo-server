@@ -63,9 +63,14 @@ module.exports = (postgresClient) => {
             return next(err);
         }
     });
-    router.get('/get/sorted', async (req, res, next) => {
+    router.post('/get/sorted', async (req, res, next) => {
         try {
-            const sortedTodos = await repository.getSortedTodos(req.query.sortBy);
+            
+
+            const sortedTodos = await repository.getSortedTodos(req.body.createdAtOrder, req.body.updatedAtOrder, req.body.filterTags, req.body.filterTitle);
+            console.log("\n\n\n")
+            console.log(req.query.createdAtOrder, req.query.updatedAtOrder, req.query.filterTag, req.query.filterTitle)
+            console.log("\n\n\n")
             res.send(sortedTodos);
         } catch(err) {
             return next(err);
